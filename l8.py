@@ -9,16 +9,23 @@ CASCADE_PATH: str = PATH + "cars.xml"
 
 
 try:
-  capture: cv.VideoCapture = cv.VideoCapture(VIDEO_SOURCE)
+  open(VIDEO_SOURCE)
 except:
   raise FileNotFoundError("Failed to load video")
   exit()
+else:
+  capture: cv.VideoCapture = cv.VideoCapture(VIDEO_SOURCE)
 
-
-car_cascade: cv.CascadeClassifier = cv.CascadeClassifier(CASCADE_PATH)
-if car_cascade.empty():
-  raise ValueError("Failed to load cascade classifier")
+try:
+  open(CASCADE_PATH)
+except:
+  raise FileNotFoundError("Failed to load cascade")
   exit()
+else:
+  car_cascade: cv.CascadeClassifier = cv.CascadeClassifier(CASCADE_PATH)
+  if car_cascade.empty():
+    raise ValueError("Failed to load cascade classifier")
+    exit()
 
 
 while True:
